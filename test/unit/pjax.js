@@ -119,10 +119,28 @@ if ($.support.pjax) {
     })
   })
 
-  asyncTest("evals scripts", function() {
+  asyncTest("evals loaded scripts before inline ones", function() {
     var frame = this.frame
 
     frame.evaledScriptLoaded = function() {
+      equal(true, frame.evaledSrcScript)
+      equal(undefined, frame.evaledInlineScript)
+      start()
+    }
+    frame.evaledInlineScriptLoaded = function() {
+    }
+    frame.$.pjax({
+      url: "scripts.html",
+      container: "#main"
+    })
+  })
+
+  asyncTest("evals inline scripts after loaded ones", function() {
+    var frame = this.frame
+
+    frame.evaledScriptLoaded = function() {
+    }
+    frame.evaledInlineScriptLoaded = function() {
       equal(true, frame.evaledSrcScript)
       equal(true, frame.evaledInlineScript)
       start()

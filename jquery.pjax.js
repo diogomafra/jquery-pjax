@@ -647,7 +647,8 @@ function extractContainer(data, xhr, options) {
 
     // Gather all script[src] elements
     obj.scripts = findAll(obj.contents, 'script[src]').remove()
-    obj.contents = obj.contents.not(obj.scripts)
+    // Commenting this line the tests pass
+    // obj.contents = obj.contents.not(obj.scripts)
   }
 
   // Trim any whitespace off the title
